@@ -1,0 +1,17 @@
+<h1>Exercise Library</h1>
+
+<div class="row mb-3" *ngFor="let exercise of allExercises; let i = index">
+  <div class="col-md-12">
+    <a href="#" class="list-group-item clearfix">
+      <div class="float-left">
+        <h4 class="list-group-item-heading">{{ exercise.name }}</h4>
+        <p class="list-group-item-text mb-0">{{ exercise.desc }}</p>
+      </div>
+    </a>
+  </div>
+  <div class="row">
+    <div class="col-md-12 mt-2">
+      <button class="btn btn-primary"(click)="onAddExercise(exercise)">Add Exercise</button>
+    </div>
+  </div>
+</div>
