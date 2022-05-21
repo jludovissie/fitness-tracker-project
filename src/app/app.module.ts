@@ -1,32 +1,28 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './Home/home.component';
 import { NavBarComponent } from './NavBar/navbar.component';
-import { SignupComponent } from './Sign-Up/signup.component';
 import { ExerciseComponent } from './workout/exercise/exercise.component';
 import { ExerciseListComponent } from './workout/exercise-list/exercise-list.component';
 import { MyExerciseComponent } from './workout/my-exercise/my-exercise.component';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
-    AppComponent, 
+    AppComponent,
     NavBarComponent,
     HomeComponent,
-    SignupComponent,
     ExerciseComponent,
     ExerciseListComponent,
-    MyExerciseComponent
+    MyExerciseComponent,
+    AuthComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
