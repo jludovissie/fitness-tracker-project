@@ -10,6 +10,7 @@ import { ExerciseComponent } from './workout/exercise/exercise.component';
 import { ExerciseListComponent } from './workout/exercise-list/exercise-list.component';
 import { MyExerciseComponent } from './workout/my-exercise/my-exercise.component';
 import { AuthComponent } from './auth/auth.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -19,9 +20,9 @@ import { AuthComponent } from './auth/auth.component';
     ExerciseComponent,
     ExerciseListComponent,
     MyExerciseComponent,
-    AuthComponent
+    AuthComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })
