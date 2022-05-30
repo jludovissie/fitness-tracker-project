@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Exercise } from '../exercise.model';
@@ -11,8 +12,23 @@ import { ExerciseService } from '../exercise.service';
 export class MyExerciseComponent implements OnInit {
   myExercises: Exercise[] = [];
   subscription: Subscription;
+  value: number = 50;
+  diffuculty: null; 
+  duration: null; 
+  thoughts: null; 
+  clicked= false; 
+  timeLeft: number; 
+  timerInterval: any; 
+  Date= new Date();
 
-  constructor(private exerciseService: ExerciseService) {}
+  todaysJournal= [
+    {Diffuculty: "", 
+     Duration: "", 
+     Thoughts:""
+    }
+  ]
+  constructor(private exerciseService: ExerciseService,
+              private http:HttpClient) {}
   
   ngOnInit(): void {
     this.myExercises = this.exerciseService.getMyExercises();
@@ -33,5 +49,27 @@ export class MyExerciseComponent implements OnInit {
   
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+  onAddJournal(){
+    this.todaysJournal.push({Diffuculty:this.diffuculty, Duration: this.duration, Thoughts: this.thoughts})
+  }
+  startRest(){
+    if (this.timerInterval) clearInterval(this.timerInterval)
+     this.timeLeft = 60
+     this.timerInterval = setInterval(() => {
+      this.timeLeft--
+    if (this.timeLeft === 0) clearInterval(this.timerInterval)
+     },1000)
+  }
+  slider(){
+    this.value = parseFloat((<HTMLInputElement>document.getElementById("myRange")).value)
+  }
+  onSubmitWorkout(){
+    this.http.post('https://course-project-3c8e4-default-rtdb.firebaseio.com/workouts.json', this.myExercises).subscribe(resData =>{
+    console.log(resData)
+    })
+  }
+  onDelete(i){
+    this.myExercises.splice(i,1)
   }
 }

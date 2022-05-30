@@ -8,12 +8,13 @@ import { ExerciseComponent } from './workout/exercise/exercise.component';
 import { MyExerciseComponent } from './workout/my-exercise/my-exercise.component';
 
 const routes: Routes = [
-  { path: "", redirectTo: 'home', pathMatch: "full"},
+  { path: "", redirectTo: '/home', pathMatch: "full"},
+  { path: "home", component: HomeComponent},
   { path: "exercise", component: ExerciseListComponent},
   { path: "my-exercise", component: MyExerciseComponent},
   { 
     path: "auth", 
-    canActivate:[SessionGuard],
+    // canActivate:[SessionGuard],
     component: AuthComponent
   }
 ];

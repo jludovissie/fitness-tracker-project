@@ -29,13 +29,45 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   signup(email: string, password: string) {
-    return this.http.post<any>(
+    return this.http.post<AuthResponseData>(
       'https://codelabs-fitness-api.herokuapp.com/api/v1/users/create', 
     {
       email: email,
       password: password
     })
   }
+  
+  private handleAuthentication(
+    email: string,
+    userId: string,
+    token: string,
+    expiresIn: number
+  ) {
+    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+    const user = new User(email, userId, token, expirationDate);
+    this.currentUser.next(user);
+
+    this.autoSignout(expiresIn);
+    localStorage.setItem('userData', JSON.stringify(user));
+  }
+  // private handleError(errorRes: HttpErrorResponse) {
+  //   let errorMessage = 'An unknown error has occurred';
+  //   if (!errorRes.error || errorRes.error.error) {
+  //     return throwError(errorMessage);
+  //   }
+  //   switch (errorRes.error.error.message) {
+  //     case 'Email_Exists':
+  //       errorMessage = 'this email exists already';
+  //       break;
+  //     case 'EMAIL_NOT_FOUND':
+  //       errorMessage = 'This email does not exist.';
+  //       break;
+  //     case 'INVALID_PASSWORD':
+  //       errorMessage = 'This password is invalid';
+  //       break;
+  //   }
+  //   return throwError(errorMessage);
+  // }
   login(email: string, password: string) {
     return this.http
       .post<any>(
@@ -59,38 +91,7 @@ export class AuthService {
           );
         })
       );
-  }
-  private handleAuthentication(
-    email: string,
-    userId: string,
-    token: string,
-    expiresIn: number
-  ) {
-    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-    const user = new User(email, userId, token, expirationDate);
-    this.currentUser.next(user);
-
-    this.autoSignout(expiresIn);
-    localStorage.setItem('userData', JSON.stringify(user));
-  }
-  private handleError(errorRes: HttpErrorResponse) {
-    let errorMessage = 'An unknown error has occurred';
-    if (!errorRes.error || errorRes.error.error) {
-      return throwError(errorMessage);
     }
-    switch (errorRes.error.error.message) {
-      case 'Email_Exists':
-        errorMessage = 'this email exists already';
-        break;
-      case 'EMAIL_NOT_FOUND':
-        errorMessage = 'This email does not exist.';
-        break;
-      case 'INVALID_PASSWORD':
-        errorMessage = 'This password is invalid';
-        break;
-    }
-    return throwError(errorMessage);
-  }
   autoLogin() {
     const userData: {
       email: string;
@@ -124,16 +125,12 @@ export class AuthService {
 
       this.currentUser.next(null);
       
-      this.router.navigate(['auth']);
-      
       localStorage.removeItem('userData');
       
       if (this.tokenExpirationTimer) {
         clearTimeout(this.tokenExpirationTimer);
         this.router.navigate(['auth']);
-      } else{
-        this.tokenExpirationTimer = null;
-      }
+      } 
     }
   });
  }  

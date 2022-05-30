@@ -1,7 +1,101 @@
 <h1>My Exercise</h1>
-<div *ngFor="let ex of myExercises">
+<!-- <div *ngFor="let ex of myExercises">
   <div class="row">
     <div class="col-sm-8 offset-sm-2">
       <h4 class="list-group-item-heading">Exercise Name {{ ex.name }}</h4>
+    </div>
+  </div> -->
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Completed</th>
+        <th scope="col">Date/Time</th>
+        <th scope="col">Drill</th>
+        <th scope="col">Reps</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ex of myExercises; let i = index">
+        <th>
+          <div class="checkbox">
+            <label><input type="checkbox" value="" /></label>
+          </div>
+        </th>
+        <th scope="row">{{ Date | date: "short" }}</th>
+        <td>{{ ex.name }}</td>
+        <td>{{ ex.desc }}</td>
+        <td (click)="onDelete(i)">X</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="text-align: center;">
+    <form>
+      <label for="range">Difficulty of Workout: {{ value }} </label>
+      <input
+        type="range"
+        min="Easy"
+        max="Hard"
+        value="Medium"
+        class="slider"
+        id="myRange"
+        [(ngModel)]="diffuculty"
+        name="Diffuculty"
+        (click)="slider()"
+      />
+      <hr>
+      <label for="Duration">How long was your workout?</label>
+      <input
+        type="text"
+        class="form-control"
+        name="Duration"
+        [(ngModel)]="duration"
+        placeholder="How long was todays workout?"
+      />
+      <label for="thoughts">What are your thoughts/concerns?</label>
+      <textarea
+        type="text"
+        class="form-control"
+        name="Thoughts"
+        [(ngModel)]="thoughts"
+        placeholder="Whats on your mind?"
+      ></textarea>
+      <button class="btn btn-success mt-3"(click)="onAddJournal()">Save Journal</button>
+    </form>
+    <div class="accordion" id="accordionExample">
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h2 class="mb-0">
+            <button
+              class="btn btn-link btn-block text-left mt-3"
+              type="button"
+              data-toggle="collapse"
+              data-target="#collapseOne"
+              aria-expanded="true"
+              aria-controls="collapseOne"
+  
+              appDropdown #r="appDropdown"
+            >
+              {{ Date | date: "short" }} Journal Entry
+            </button>
+          </h2>
+        </div>
+        <div
+          id="collapseOne"  [ngClass]="{'in':r.isOpen}"
+          class="collapse"
+          aria-labelledby="headingOne"
+          data-parent="#accordionExample"
+          *ngFor="let todaysJournal of todaysJournal"
+        >
+          <div class="card-body">
+            {{ todaysJournal.Diffuculty }}
+            <hr />
+            {{ todaysJournal.Duration }}
+            <hr />
+            {{ todaysJournal.Thoughts }}
+          </div>
+        </div>
+      </div>
     </div>
   </div>

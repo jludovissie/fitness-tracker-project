@@ -10,15 +10,20 @@ import { Subscription } from 'rxjs';
 })
 export class ExerciseListComponent implements OnInit {
   allExercises: Exercise[] = [];
-
+  message = false;
+  modal= "Your Log has been updated"
   constructor(private exerciseService: ExerciseService) {}
 
   ngOnInit(): void {
-    this.allExercises = this.exerciseService.getExercises()
+    this.allExercises = this.exerciseService.getExercises();
   }
-  onAddExercise(exercise){
-    console.log(exercise)
-    this.exerciseService.addExercise(exercise)
+  onAddExercise(exercise) {
+    console.log(exercise);
+    this.exerciseService.addExercise(exercise);
+    this.message = true;
+  }
+  onHandleModal(){
+    this.message = null;
   }
 }
 

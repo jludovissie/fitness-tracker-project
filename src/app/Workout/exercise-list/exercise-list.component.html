@@ -7,6 +7,9 @@
         <h4 class="list-group-item-heading">{{ exercise.name }}</h4>
         <p class="list-group-item-text mb-0">{{ exercise.desc }}</p>
       </div>
+      <app-alert [message]="modal" *ngIf="message" (close)="onHandleModal()">
+     
+      </app-alert>
     </a>
   </div>
   <div class="row">
@@ -15,3 +18,12 @@
     </div>
   </div>
 </div>
+<!-- <div style="text-align: center;">
+  <input type="text" [(ngModel)]="exercise" placeholder="Exercise" />
+  <input type="text" [(ngModel)]="Description" placeholder="Equipment" />
+  <input type="text" [(ngModel)]="Body" placeholder="Body Part" />
+  <button (click)="onUpdateLibrary()">Add Exercise</button>
+</div>   -->
+<!-- <p *ngIf = "onAddExercise">
+  {{ message }}
+ </p> -->

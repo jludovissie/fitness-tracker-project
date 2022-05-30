@@ -10,7 +10,11 @@ import { ExerciseComponent } from './workout/exercise/exercise.component';
 import { ExerciseListComponent } from './workout/exercise-list/exercise-list.component';
 import { MyExerciseComponent } from './workout/my-exercise/my-exercise.component';
 import { AuthComponent } from './auth/auth.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { DropdownDirective } from './shared/dropdown.directive';
+import { AlertComponent } from './shared/alert/alert.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -21,9 +25,11 @@ import { HttpClientModule } from '@angular/common/http';
     ExerciseListComponent,
     MyExerciseComponent,
     AuthComponent,
+    DropdownDirective,
+    AlertComponent
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
-  providers: [],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, NgbModule],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
