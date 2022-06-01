@@ -4,19 +4,19 @@ import { AuthService } from './auth.service';
 import {
   HttpRequest,
   HttpHandler,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpParams
 } from '@angular/common/http';
 
 
 @Injectable({providedIn:'root'})
 export class AuthInterceptor implements HttpInterceptor {
-
   constructor(private authService: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler){
     return this.authService.currentUser.pipe(
       take(1),
-      exhaustMap( user=> {
+      exhaustMap((user) => {
         if (!user) {
           return next.handle(req) 
         } 

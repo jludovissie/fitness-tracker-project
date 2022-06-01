@@ -1,4 +1,5 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
+import { Subscription } from "rxjs";
 import { AuthService } from "../auth/auth.service";
 
 @Component({
@@ -10,19 +11,19 @@ import { AuthService } from "../auth/auth.service";
 export class NavBarComponent implements OnInit, OnDestroy{
   public isMenuCollapsed = true; 
   isAuthenticated = false;
+  private userSub: Subscription
 
   constructor(private authService: AuthService ){}
 
   ngOnInit(){
-    this.authService.currentUser.subscribe(currentUser => {
+    this.userSub = this.authService.currentUser.subscribe((currentUser) => {
     this.isAuthenticated = !currentUser ? false : true 
     });   
   }
-  ngOnDestroy(): void {
-    this.authService.currentUser.subscribe((user)=>{
-      this.isAuthenticated = !!user
-    });  
+  ngOnDestroy() {
+  this.userSub.unsubscribe()
   }
+
   onLogout(){
     this.authService.signOut();
   }

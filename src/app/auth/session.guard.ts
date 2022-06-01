@@ -6,13 +6,14 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SessionGuard implements CanActivate {
-  constructor(private router:Router){}
+  constructor(private router: Router) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    
     const userData = JSON.parse(localStorage.getItem('userData'))
     if (userData){
-      return this.router.createUrlTree(['exercise']);
+      return this.router.createUrlTree(['']);
     } else {
       return true; 
     }  

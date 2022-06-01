@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Exercise } from '../exercise.model';
 import { ExerciseService } from '../exercise.service';
-import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-exercise-list',
@@ -9,8 +10,9 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./exercise-list.component.css'],
 })
 export class ExerciseListComponent implements OnInit {
+  submitted = false; 
   allExercises: Exercise[] = [];
-  message = false;
+  message;
   modal= "Your Log has been updated"
   constructor(private exerciseService: ExerciseService) {}
 
@@ -20,10 +22,16 @@ export class ExerciseListComponent implements OnInit {
   onAddExercise(exercise) {
     console.log(exercise);
     this.exerciseService.addExercise(exercise);
-    this.message = true;
+
   }
-  onHandleModal(){
-    this.message = null;
+  onSubmit(formObj: NgForm){
+    this.submitted = true; 
+
+    this.exerciseService.addExercise(formObj.value.name); 
+    this.exerciseService.addExercise(formObj.value.desc) 
+  
+
+    formObj.reset();
   }
 }
 

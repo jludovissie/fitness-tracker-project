@@ -1,15 +1,31 @@
-<h1>Exercise Library</h1>
 
+
+<div class = "container">
+  <h2>Submit a New Workout</h2>
+  <form (ngSubmit)="onSubmit(f)" #f ="ngForm">
+    <div class="form-group">
+      <label>Name of Workout: </label>
+      <input type="text" id="name" class="form-control" ngModel name="name">
+      <label>Description of Workout: </label>
+      <input type="text" id="desc" class="form-control" ngModel name="desc" >
+      <label>Body part worked: </label>
+      <input type="text" id="exercise_body" class="form-control" ngModel name="exercise_body" exerciseBody>
+      <button class="btn btn-success mt-3" type="submit">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>
+  <hr>
+  <h3>Workout Library</h3>
 <div class="row mb-3" *ngFor="let exercise of allExercises; let i = index">
-  <div class="col-md-12">
+  <div class="col-md-12"> 
     <a href="#" class="list-group-item clearfix">
       <div class="float-left">
         <h4 class="list-group-item-heading">{{ exercise.name }}</h4>
         <p class="list-group-item-text mb-0">{{ exercise.desc }}</p>
+        <app-alert [message]="onAddExercise()" *ngIf="message" (close)="onHandleModal()"></app-alert>
       </div>
-      <app-alert [message]="modal" *ngIf="message" (close)="onHandleModal()">
-     
-      </app-alert>
     </a>
   </div>
   <div class="row">
@@ -18,12 +34,4 @@
     </div>
   </div>
 </div>
-<!-- <div style="text-align: center;">
-  <input type="text" [(ngModel)]="exercise" placeholder="Exercise" />
-  <input type="text" [(ngModel)]="Description" placeholder="Equipment" />
-  <input type="text" [(ngModel)]="Body" placeholder="Body Part" />
-  <button (click)="onUpdateLibrary()">Add Exercise</button>
-</div>   -->
-<!-- <p *ngIf = "onAddExercise">
-  {{ message }}
- </p> -->
+

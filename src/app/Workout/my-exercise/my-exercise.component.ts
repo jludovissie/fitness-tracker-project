@@ -65,8 +65,12 @@ export class MyExerciseComponent implements OnInit {
     this.value = parseFloat((<HTMLInputElement>document.getElementById("myRange")).value)
   }
   onSubmitWorkout(){
-    this.http.post('https://course-project-3c8e4-default-rtdb.firebaseio.com/workouts.json', this.myExercises).subscribe(resData =>{
-    console.log(resData)
+    this.http.post('https://codelabs-fitness-api.herokuapp.com/api/v1/users/create', this.myExercises)
+    .subscribe(resData =>{
+    console.log(resData);
+    if (resData){
+      this.exerciseService.saveWorkout()
+    }
     })
   }
   onDelete(i){

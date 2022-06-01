@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Exercise } from './exercise.model';
@@ -40,6 +41,8 @@ export class ExerciseService {
   // my exercsies property
   myExercises: Exercise[] = [];
 
+  constructor(private httpClient: HttpClient){}
+
   getExercises() {
     return this.allExercises.slice();
   }
@@ -56,6 +59,6 @@ export class ExerciseService {
     this.myExerciseSubject.next(this.myExercises.slice());
     return this.myExerciseSubject.asObservable();
   }
+  saveWorkout(){}
+}  
 
-  onAddExercise() {}
-}
